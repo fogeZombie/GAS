@@ -9,10 +9,13 @@
 class UGAS_DebugMenu_MenuContents;
 
 UENUM(BlueprintType)
-enum class EDebugMenuItemWidgetType : uint8
+enum class EDebugMenuItemCommandType : uint8
 {
-	DMIW_Command 	UMETA(DisplayName = "Command"),
-	DMIW_Menu 		UMETA(DisplayName = "Menu"),
+	DMIC_Exec	UMETA(DisplayName = "Exec"),
+	DMIC_Bool 	UMETA(DisplayName = "Bool"),
+	DMIC_Int 	UMETA(DisplayName = "Int"),
+	DMIC_Float 	UMETA(DisplayName = "Float"),
+	DMIC_Menu	UMETA(DisplayName = "Menu"),
 };
 
 USTRUCT(BlueprintType)
@@ -22,7 +25,7 @@ struct FDebugMenu_ItemWidgetData
 
 	// Indicate if the item is a command or a menu
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	EDebugMenuItemWidgetType EntryType;
+	EDebugMenuItemCommandType CommandType;
 
 	// The name of the item, also used for menu item's breadcrumb trail
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -32,21 +35,13 @@ struct FDebugMenu_ItemWidgetData
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FText Tooltip;
 
-	// If it's a menu, where to look for its contents
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UGAS_DebugMenu_MenuContents* MenuContents;
-
 	// If it's a command, the literal command string
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FString CommandString;
 
-	// Whether or not the UI should display if the command is on or off
+	// If it's a menu, where to look for its contents
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool bToggleCommand;
-
-	// Whether or not the UI should pass additional input, may subclass this.
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool bUsesInput;
+	UGAS_DebugMenu_MenuContents* MenuContents;
 };
 
 /**
@@ -60,4 +55,10 @@ class GAS_API UGAS_DebugMenu_ItemWidget : public UUserWidget
 public:
 	UPROPERTY(BlueprintReadWrite, meta = (ExposeOnSpawn = "true"))
 	FDebugMenu_ItemWidgetData DMIW_Data;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "DebugMenu")
+	int GetDebugMenuVariableValue_Bool();
+
+	UFUNCTION(BlueprintCallable, Category = "DebugMenu")
+	void ExecuteDebugMenuCommand();
 };
