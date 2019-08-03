@@ -18,8 +18,6 @@ ABFShip::ABFShip() {
 //==============================================================================
 void ABFShip::OnConstruction(const FTransform& transform) {
     Super::OnConstruction(transform);
-
-    //_attributes = NewObject<UBFShipAttributes>(this);
 }
 
 //==============================================================================

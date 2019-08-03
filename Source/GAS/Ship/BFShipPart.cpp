@@ -27,21 +27,4 @@ void ABFShipPart::Tick(float dt) {
     Super::Tick(dt);
 }
 
-//==============================================================================
-ABFShipWeapon::ABFShipWeapon() {
-}
-
-//==============================================================================
-void ABFShipWeapon::BeginPlay() {
-    if (_partDef)
-        _weaponDef = _partDef->weapon;
-
-    Super::BeginPlay();
-}
-
-//==============================================================================
-void ABFShipWeapon::Tick(float dt) {
-    Super::Tick(dt);
-}
-
 #pragma optimize("", on)

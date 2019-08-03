@@ -45,7 +45,4 @@ public:
 protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Ship")
     UAbilitySystemComponent * _abilityCmp = nullptr;
-
-    //UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Ship")
-    //UBFShipAttributes * _attributes = nullptr;
 };

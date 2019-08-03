@@ -23,33 +23,18 @@ public:
     /** Effects to apply to the ship when placed */
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ship")
     TArray<UGameplayEffect *> shipEffects;
-
-    /** Optional weapon data if this part is a weapon */
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ship")
-    UShipWeaponDef * weapon = nullptr;
 };
 
-/** Defines attributes for the player's ship */
+/** Defines attributes for a ship part. */
 UCLASS(BlueprintType)
-class UBFWeaponAttributes : public UAttributeSet {
+class UBFShipPartAttributes : public UAttributeSet {
     GENERATED_BODY()
 
 public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ship")
-    FGameplayAttributeData Attack;
+    FGameplayAttributeData WeaponAttack;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ship")
-    FGameplayAttributeData Damage;
-};
-
-
-/** Data asset for weapon parts */
-UCLASS(BlueprintType)
-class UShipWeaponDef : public UDataAsset {
-    GENERATED_BODY()
-
-public:
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ship")
-    TSubclassOf<UBFWeaponAttributes> attributeClass = UBFWeaponAttributes::StaticClass();
+    FGameplayAttributeData WeaponDamage;
 };
 
 /** Base class for a ship part */
@@ -68,21 +53,4 @@ protected:
     UAbilitySystemComponent * _abilityCmp = nullptr;
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Ship", meta=(ExposeOnSpawn=true))
     UShipPartDef * _partDef = nullptr;
-};
-
-
-/** Base class for a ship weapon actor */
-UCLASS(Blueprintable)
-class ABFShipWeapon : public ABFShipPart {
-    GENERATED_BODY()
-
-public:
-    ABFShipWeapon();
-
-    virtual void BeginPlay() override;
-    virtual void Tick(float dt) override;
-
-protected:
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Ship")
-    UShipWeaponDef * _weaponDef = nullptr;
 };
