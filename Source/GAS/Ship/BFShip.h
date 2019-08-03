@@ -12,6 +12,13 @@
 
 class UDataTable;
 
+UENUM(BlueprintType)
+enum class EBFShipSlotType : uint8 {
+    Simple,
+    Weapon,
+    Engine
+};
+
 /** Defines attributes for the player's ship */
 UCLASS(BlueprintType)
 class UBFShipAttributes : public UAttributeSet {
