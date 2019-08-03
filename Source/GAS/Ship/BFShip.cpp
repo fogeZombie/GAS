@@ -6,6 +6,7 @@
 //==============================================================================
 
 #include "BFShip.h"
+#include "BFShipPart.h"
 
 //==============================================================================
 ABFShip::ABFShip() {
@@ -28,4 +29,25 @@ void ABFShip::BeginPlay() {
 //==============================================================================
 void ABFShip::Tick(float dt) {
     Super::Tick(dt);
+}
+
+//==============================================================================
+bool UBFShipLib::PartIsEngine(UShipPartDef* partDef) {
+    return partDef->engineThrust > 0;
+}
+
+//==============================================================================
+bool UBFShipLib::PartIsWeapon(UShipPartDef* partDef) {
+    return partDef->weaponAttack > 0;
+}
+
+//==============================================================================
+bool UBFShipLib::PartFitsSlot(UShipPartDef* partDef, EBFShipSlotType slot) {
+    switch (slot) {
+        case EBFShipSlotType::Engine: return PartIsEngine(partDef);
+        case EBFShipSlotType::Weapon: return PartIsWeapon(partDef);
+
+        default:
+        case EBFShipSlotType::Simple: return true;
+    }
 }

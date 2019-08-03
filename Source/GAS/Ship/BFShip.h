@@ -8,9 +8,11 @@
 #include "GameFramework/Actor.h"
 #include "AttributeSet.h"
 #include "AbilitySystemComponent.h"
+#include "Kismet/BlueprintFunctionLibrary.h"
 #include "BFShip.generated.h"
 
 class UDataTable;
+class UShipPartDef;
 
 UENUM(BlueprintType)
 enum class EBFShipSlotType : uint8 {
@@ -52,4 +54,17 @@ public:
 protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Ship")
     UAbilitySystemComponent * _abilityCmp = nullptr;
+};
+
+UCLASS(BlueprintType)
+class UBFShipLib : public UBlueprintFunctionLibrary {
+    GENERATED_BODY()
+
+public:
+    UFUNCTION(BlueprintPure, Category = "Ship")
+    static bool PartIsEngine(UShipPartDef* partDef);
+    UFUNCTION(BlueprintPure, Category = "Ship")
+    static bool PartIsWeapon(UShipPartDef* partDef);
+    UFUNCTION(BlueprintCallable, Category = "Ship")
+    static bool PartFitsSlot(UShipPartDef* partDef, EBFShipSlotType slot);
 };
