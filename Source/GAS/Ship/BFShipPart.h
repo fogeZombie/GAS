@@ -23,6 +23,13 @@ public:
     /** Effects to apply to the ship when placed */
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ship")
     TArray<UGameplayEffect *> shipEffects;
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ship")
+    float weaponAttack = 0;
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ship")
+    float weaponDefense = 0;
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ship")
+    float engineThrust = 0;
 };
 
 /** Defines attributes for a ship part. */
