@@ -3,6 +3,7 @@
 #include "GAS_ANS_AbilityBranch.h"
 
 #include "GameplayAbility.h"
+#include "GAS_AbilityUtilityInterface.h"
 
 UGAS_ANS_AbilityBranch::UGAS_ANS_AbilityBranch(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -22,6 +23,16 @@ void UGAS_ANS_AbilityBranch::NotifyBegin(USkeletalMeshComponent* MeshComp, class
 	AnimInstance = MeshComp->GetAnimInstance();
 	HasFired = false;
 
+	AActor* OwningActor = MeshComp->GetOwner();
+	if (OwningActor != nullptr)
+	{
+		IGAS_AbilityUtilityInterface* InterfaceObject = Cast<IGAS_AbilityUtilityInterface>(MeshComp->GetOwner());
+		if (InterfaceObject != nullptr)
+		{
+			InterfaceObject->Execute_I_BufferAbilityAdd(OwningActor);
+		}
+	}
+
 	Received_NotifyBegin(MeshComp, Animation, TotalDuration);
 }
 
@@ -37,7 +48,19 @@ void UGAS_ANS_AbilityBranch::NotifyTick(USkeletalMeshComponent* MeshComp, class 
 
 	if (HasFired == false && animationMontage_CurrentTime >= FireTime)
 	{
-		Received_Fire(MeshComp);
+		Received_Fire(MeshComp); // this should no longer be necessary with the interface setup calling "Execute_I_BufferAbilitySetFireState".
+
+		AActor* OwningActor = MeshComp->GetOwner();
+		if (OwningActor != nullptr)
+		{
+			IGAS_AbilityUtilityInterface* InterfaceObject = Cast<IGAS_AbilityUtilityInterface>(MeshComp->GetOwner());
+			if (InterfaceObject != nullptr)
+			{
+				InterfaceObject->Execute_I_BufferAbilitySetFireState(OwningActor);
+			}
+		}
+
+		// Set HasFired to skip on future ticks.
 		HasFired = true;
 	}
 
@@ -46,10 +69,20 @@ void UGAS_ANS_AbilityBranch::NotifyTick(USkeletalMeshComponent* MeshComp, class 
 
 void UGAS_ANS_AbilityBranch::NotifyEnd(USkeletalMeshComponent* MeshComp, class UAnimSequenceBase* Animation)
 {
+	AActor* OwningActor = MeshComp->GetOwner();
+	if (OwningActor != nullptr)
+	{
+		IGAS_AbilityUtilityInterface* InterfaceObject = Cast<IGAS_AbilityUtilityInterface>(MeshComp->GetOwner());
+		if (InterfaceObject != nullptr)
+		{
+			InterfaceObject->Execute_I_BufferAbilityRemove(OwningActor);
+		}
+	}
+
 	Received_NotifyEnd(MeshComp, Animation);
 }
 
-EAbilityBranchInputType UGAS_ANS_AbilityBranch::GetInputType() const
+EAbilityBranchInputTypes UGAS_ANS_AbilityBranch::GetInputType() const
 {
 	return InputType;
 }
@@ -60,43 +93,43 @@ FString UGAS_ANS_AbilityBranch::GetNotifyName_Implementation() const
 
 	switch (InputType)
 	{
-	case EAbilityBranchInputType::ABI_None:
+	case EAbilityBranchInputTypes::ABI_None:
 		input_type_string = FString(TEXT("None"));
 		break;
-	case EAbilityBranchInputType::ABI_Face_Up:
+	case EAbilityBranchInputTypes::ABI_Face_Up:
 		input_type_string = FString(TEXT("ABI_Face_Up"));
 		break;
-	case EAbilityBranchInputType::ABI_Face_Down:
+	case EAbilityBranchInputTypes::ABI_Face_Down:
 		input_type_string = FString(TEXT("ABI_Face_Down"));
 		break;
-	case EAbilityBranchInputType::ABI_Face_Left:
+	case EAbilityBranchInputTypes::ABI_Face_Left:
 		input_type_string = FString(TEXT("ABI_Face_Left"));
 		break;
-	case EAbilityBranchInputType::ABI_Face_Right:
+	case EAbilityBranchInputTypes::ABI_Face_Right:
 		input_type_string = FString(TEXT("ABI_Face_Right"));
 		break;
-	case EAbilityBranchInputType::ABI_Bumper_Left:
+	case EAbilityBranchInputTypes::ABI_Bumper_Left:
 		input_type_string = FString(TEXT("ABI_Bumper_Left"));
 		break;
-	case EAbilityBranchInputType::ABI_Bumper_Right:
+	case EAbilityBranchInputTypes::ABI_Bumper_Right:
 		input_type_string = FString(TEXT("ABI_Bumper_Right"));
 		break;
-	case EAbilityBranchInputType::ABI_Trigger_Left:
+	case EAbilityBranchInputTypes::ABI_Trigger_Left:
 		input_type_string = FString(TEXT("ABI_Trigger_Left"));
 		break;
-	case EAbilityBranchInputType::ABI_Trigger_Right:
+	case EAbilityBranchInputTypes::ABI_Trigger_Right:
 		input_type_string = FString(TEXT("ABI_Trigger_Right"));
 		break;
-	case EAbilityBranchInputType::ABI_Dpad_Up:
+	case EAbilityBranchInputTypes::ABI_Dpad_Up:
 		input_type_string = FString(TEXT("ABI_Dpad_Up"));
 		break;
-	case EAbilityBranchInputType::ABI_Dpad_Down:
+	case EAbilityBranchInputTypes::ABI_Dpad_Down:
 		input_type_string = FString(TEXT("ABI_Dpad_Down"));
 		break;
-	case EAbilityBranchInputType::ABI_Dpad_Left:
+	case EAbilityBranchInputTypes::ABI_Dpad_Left:
 		input_type_string = FString(TEXT("ABI_Dpad_Left"));
 		break;
-	case EAbilityBranchInputType::ABI_Dpad_Right:
+	case EAbilityBranchInputTypes::ABI_Dpad_Right:
 		input_type_string = FString(TEXT("ABI_Dpad_Right"));
 		break;
 	default:

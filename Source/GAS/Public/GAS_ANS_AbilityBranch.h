@@ -8,21 +8,21 @@
 
 // enum for input buffer
 UENUM(BlueprintType)
-enum class EAbilityBranchInputType : uint8
+enum class EAbilityBranchInputTypes : uint8
 {
 	ABI_None			UMETA(DisplayName = "None"),
-	ABI_Face_Up			UMETA(DisplayName = "None"),
-	ABI_Face_Down		UMETA(DisplayName = "None"),
-	ABI_Face_Left		UMETA(DisplayName = "None"),
-	ABI_Face_Right		UMETA(DisplayName = "None"),
-	ABI_Bumper_Left		UMETA(DisplayName = "None"),
-	ABI_Bumper_Right	UMETA(DisplayName = "None"),
-	ABI_Trigger_Left	UMETA(DisplayName = "None"),
-	ABI_Trigger_Right	UMETA(DisplayName = "None"),
-	ABI_Dpad_Up			UMETA(DisplayName = "None"),
-	ABI_Dpad_Down		UMETA(DisplayName = "None"),
-	ABI_Dpad_Left		UMETA(DisplayName = "None"),
-	ABI_Dpad_Right		UMETA(DisplayName = "None"),
+	ABI_Face_Up			UMETA(DisplayName = "Face_Up"),
+	ABI_Face_Down		UMETA(DisplayName = "Face_Down"),
+	ABI_Face_Left		UMETA(DisplayName = "Face_Left"),
+	ABI_Face_Right		UMETA(DisplayName = "Face_Right"),
+	ABI_Bumper_Left		UMETA(DisplayName = "Bumper_Left"),
+	ABI_Bumper_Right	UMETA(DisplayName = "Bumper_Right"),
+	ABI_Trigger_Left	UMETA(DisplayName = "Trigger_Left"),
+	ABI_Trigger_Right	UMETA(DisplayName = "Trigger_Right"),
+	ABI_Dpad_Up			UMETA(DisplayName = "Dpad_Up"),
+	ABI_Dpad_Down		UMETA(DisplayName = "Dpad_Down"),
+	ABI_Dpad_Left		UMETA(DisplayName = "Dpad_Left"),
+	ABI_Dpad_Right		UMETA(DisplayName = "Dpad_Right"),
 };
 
 class UGameplayAbility;
@@ -42,7 +42,7 @@ class GAS_API UGAS_ANS_AbilityBranch : public UAnimNotifyState
 
 	// Properties to edit in the AnimNotifyState
 	UPROPERTY(EditAnywhere, Category = "AbilityBranch", meta = (ToolTip = "The input type associated with this branch."))
-	EAbilityBranchInputType InputType;
+	EAbilityBranchInputTypes InputType;
 
 	UPROPERTY(EditAnywhere, Category = "AbilityBranch", meta = (ToolTip = "The ability to branch to when activating the input type."))
 	TSubclassOf<UGameplayAbility> Ability;
@@ -59,12 +59,13 @@ class GAS_API UGAS_ANS_AbilityBranch : public UAnimNotifyState
 	virtual void NotifyEnd(class USkeletalMeshComponent * MeshComp, class UAnimSequenceBase * Animation) override;
 
 	UFUNCTION(BlueprintCallable, Category = "CombatCollision")
-	EAbilityBranchInputType GetInputType() const;
+	EAbilityBranchInputTypes GetInputType() const;
 
-	// Overridden from UAnimNotifyState to provide custom notify name.
+	// Overridden to provide custom notify name.
 	FString GetNotifyName_Implementation() const override;
 
 public:
+	// Unclear if this is necessary.
 	UFUNCTION(BlueprintImplementableEvent)
 	bool Received_Fire(USkeletalMeshComponent* MeshComp) const;
 };

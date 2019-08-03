@@ -7,11 +7,12 @@
 
 #include "AbilitySystemInterface.h"
 #include "AbilitySystemComponent.h"
+#include "GAS_AbilityUtilityInterface.h"
 
 #include "GASCharacter.generated.h"
 
 UCLASS(config=Game)
-class AGASCharacter : public ACharacter, public IAbilitySystemInterface
+class AGASCharacter : public ACharacter, public IAbilitySystemInterface, public IGAS_AbilityUtilityInterface
 {
 	GENERATED_BODY()
 
