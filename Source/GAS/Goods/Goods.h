@@ -5,7 +5,15 @@
 // 03.08.2019
 //==============================================================================
 
-//#include "GameFramework/Actor.h"
-//#include "AttributeSet.h"
-//#include "AbilitySystemComponent.h"
-//#include "BFShip.generated.h"
+#include "Goods.generated.h"
+
+USTRUCT(BlueprintType)
+struct FMarketGood {
+    GENERATED_BODY()
+
+public:
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Goods")
+    FName name;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Goods")
+    float price;
+};
