@@ -9,6 +9,7 @@
 
 #include "GameFramework/Actor.h"
 #include "AttributeSet.h"
+#include "AbilitySystemInterface.h"
 #include "AbilitySystemComponent.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "BFShipPart.h"
@@ -37,7 +38,7 @@ public:
 
 /** Class for the player's ship */
 UCLASS(Blueprintable)
-class ABFShip : public AActor {
+class ABFShip : public AActor, public IAbilitySystemInterface {
     GENERATED_BODY()
 
 public:
@@ -46,6 +47,8 @@ public:
     virtual void OnConstruction(const FTransform& transform);
     virtual void BeginPlay() override;
     virtual void Tick(float dt) override;
+
+    UAbilitySystemComponent* GetAbilitySystemComponent() const override { return _abilityCmp; }
 
 protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Ship")
