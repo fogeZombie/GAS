@@ -32,12 +32,14 @@ void ABFShip::Tick(float dt) {
 }
 
 //==============================================================================
+void ABFShip::SetBaseAttribute(FGameplayAttribute attr, float value) {
+    _abilityCmp->SetNumericAttributeBase(attr, value);
+}
+
+//==============================================================================
 bool UBFShipLib::PartFitsSlot(UShipPartDef* partDef, EBFShipSlotType slot) {
     if (!partDef)
         return false;
 
-    if (slot == EBFShipSlotType::Simple)
-        return true;
-    else
-        return partDef->compatibleSlots.Contains(slot);
+    return partDef->compatibleSlots.Contains(slot);
 }
