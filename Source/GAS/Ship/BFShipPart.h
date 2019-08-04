@@ -29,6 +29,11 @@ class UShipPartDef : public UDataAsset {
     GENERATED_BODY()
 
 public:
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ship")
+    FName name;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ship")
+    FString displayName;
+
     /** Effects to apply to the ship when placed */
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ship")
     TArray<TSubclassOf<UGameplayEffect>> shipEffects;
