@@ -5,6 +5,8 @@
 // 03.08.2019
 //==============================================================================
 
+#pragma once
+
 #include "Goods.generated.h"
 
 USTRUCT(BlueprintType)

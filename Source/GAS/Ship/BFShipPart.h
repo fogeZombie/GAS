@@ -5,6 +5,8 @@
 // 03.08.2019
 //==============================================================================
 
+#pragma once
+
 #include "GameFramework/Actor.h"
 #include "AttributeSet.h"
 #include "AbilitySystemComponent.h"
@@ -13,6 +15,13 @@
 
 class UDataTable;
 class UShipWeaponDef;
+
+UENUM(BlueprintType)
+enum class EBFShipSlotType : uint8 {
+    Simple,
+    Weapon,
+    Engine
+};
 
 /** Base data asset for a ship part */
 UCLASS(BlueprintType)
@@ -23,13 +32,9 @@ public:
     /** Effects to apply to the ship when placed */
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ship")
     TArray<UGameplayEffect *> shipEffects;
-
+    /** Array of compatible slot types. All parts will fit a Simple slot implicitly */
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ship")
-    float weaponAttack = 0;
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ship")
-    float weaponDefense = 0;
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ship")
-    float engineThrust = 0;
+    TArray<EBFShipSlotType> compatibleSlots;
 };
 
 /** Defines attributes for a ship part. */

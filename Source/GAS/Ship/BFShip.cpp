@@ -32,22 +32,12 @@ void ABFShip::Tick(float dt) {
 }
 
 //==============================================================================
-bool UBFShipLib::PartIsEngine(UShipPartDef* partDef) {
-    return partDef->engineThrust > 0;
-}
-
-//==============================================================================
-bool UBFShipLib::PartIsWeapon(UShipPartDef* partDef) {
-    return partDef->weaponAttack > 0;
-}
-
-//==============================================================================
 bool UBFShipLib::PartFitsSlot(UShipPartDef* partDef, EBFShipSlotType slot) {
-    switch (slot) {
-        case EBFShipSlotType::Engine: return PartIsEngine(partDef);
-        case EBFShipSlotType::Weapon: return PartIsWeapon(partDef);
+    if (!partDef)
+        return false;
 
-        default:
-        case EBFShipSlotType::Simple: return true;
-    }
+    if (slot == EBFShipSlotType::Simple)
+        return true;
+    else
+        return partDef->compatibleSlots.Contains(slot);
 }

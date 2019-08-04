@@ -5,21 +5,17 @@
 // 03.08.2019
 //==============================================================================
 
+#pragma once
+
 #include "GameFramework/Actor.h"
 #include "AttributeSet.h"
 #include "AbilitySystemComponent.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
+#include "BFShipPart.h"
 #include "BFShip.generated.h"
 
 class UDataTable;
 class UShipPartDef;
-
-UENUM(BlueprintType)
-enum class EBFShipSlotType : uint8 {
-    Simple,
-    Weapon,
-    Engine
-};
 
 /** Defines attributes for the player's ship */
 UCLASS(BlueprintType)
@@ -61,10 +57,6 @@ class UBFShipLib : public UBlueprintFunctionLibrary {
     GENERATED_BODY()
 
 public:
-    UFUNCTION(BlueprintPure, Category = "Ship")
-    static bool PartIsEngine(UShipPartDef* partDef);
-    UFUNCTION(BlueprintPure, Category = "Ship")
-    static bool PartIsWeapon(UShipPartDef* partDef);
     UFUNCTION(BlueprintCallable, Category = "Ship")
     static bool PartFitsSlot(UShipPartDef* partDef, EBFShipSlotType slot);
 };
