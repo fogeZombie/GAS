@@ -38,6 +38,15 @@ public:
     FGameplayAttributeData PersonnelSpace;
 };
 
+UCLASS(BlueprintType)
+class UBFEncounterAttributes : public UAttributeSet {
+    GENERATED_BODY()
+
+public:
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ship")
+    FGameplayAttributeData PersonnelPayoutScale;
+};
+
 /** Class for the player's ship */
 UCLASS(Blueprintable)
 class ABFShip : public AActor, public IAbilitySystemInterface {
