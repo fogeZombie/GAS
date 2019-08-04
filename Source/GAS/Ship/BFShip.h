@@ -29,6 +29,8 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ship")
     FGameplayAttributeData Armor;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ship")
+    FGameplayAttributeData AttackPower;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ship")
     FGameplayAttributeData Evasion;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ship")
     FGameplayAttributeData CargoSpace;
@@ -49,6 +51,9 @@ public:
     virtual void Tick(float dt) override;
 
     UAbilitySystemComponent* GetAbilitySystemComponent() const override { return _abilityCmp; }
+
+    UFUNCTION(BlueprintCallable, Category = "Ship")
+    void SetBaseAttribute(FGameplayAttribute attr, float value);
 
 protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Ship")
