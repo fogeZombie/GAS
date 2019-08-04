@@ -31,7 +31,7 @@ class UShipPartDef : public UDataAsset {
 public:
     /** Effects to apply to the ship when placed */
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ship")
-    TArray<UGameplayEffect *> shipEffects;
+    TArray<TSubclassOf<UGameplayEffect>> shipEffects;
     /** Array of compatible slot types. All parts will fit a Simple slot implicitly */
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ship")
     TArray<EBFShipSlotType> compatibleSlots;
