@@ -33,6 +33,9 @@ public:
     FName name;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ship")
     FString displayName;
+    /** Effects to apply to the part when purchased */
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ship")
+    TArray<TSubclassOf<UGameplayEffect>> partPassiveEffects;
 
     /** Effects to apply to the ship when placed */
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ship")
